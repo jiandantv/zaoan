@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>早安打卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: linear-gradient(to bottom, #fdf6f0, #fbe9e7);
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .title {
+            font-size: 24px;
+            color: #664b4a;
+            margin-bottom: 10px;
+        }
+        .date {
+            font-size: 16px;
+            color: #997a7a;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .greeting {
+            font-size: 20px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .sentence {
+            font-size: 16px;
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #f8b3b0;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #f69a96;
+        }
+        .record {
+            font-size: 14px;
+            color: #997a7a;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">☀️ 早安打卡</div>
+        <div class="date" id="date"></div>
+
+        <div class="card">
+            <div class="greeting">新的一天，平安喜乐</div>
+            <div class="sentence">
+                生活最好的状态，是眼里有光，心中有爱，
+                <br>日出而作，日落而息，
+                <br>不慌不忙，闪闪发光。
+            </div>
+            <button class="btn" onclick="daKa()">✅ 今日打卡</button>
+            <div class="record" id="record">已连续打卡 0 天</div>
+        </div>
+    </div>
+
+    <script>
+        // 显示日期
+        let now = new Date();
+        let dateStr = now.getFullYear() + "年" + (now.getMonth()+1) + "月" + now.getDate() + "日";
+        document.getElementById("date").innerText = dateStr;
+
+        // 打卡逻辑
+        let count = localStorage.getItem("daKaCount") || 0;
+        document.getElementById("record").innerText = "已连续打卡 " + count + " 天";
+
+        function daKa() {
+            count++;
+            localStorage.setItem("daKaCount", count);
+            document.getElementById("record").innerText = "已连续打卡 " + count + " 天";
+            alert("打卡成功！今天也要元气满满 ✨");
+        }
+    </script>
+</body>
+</html>
