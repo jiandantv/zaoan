@@ -6,22 +6,16 @@
 <title>早安打卡</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei","YouYuan",sans-serif;font-weight:700}
-body{min-height:100vh;background-size:cover;background-position:center;background-attachment:fixed;padding:20px}
+body{min-height:100vh;background:#f4f7fa;padding:20px}
 .container{max-width:400px;margin:0 auto}
-.login{background:rgba(255,255,255,.95);border-radius:24px;padding:50px 30px;margin:100px auto;max-width:350px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
+.login{background:#fff;border-radius:24px;padding:50px 30px;margin:100px auto;max-width:350px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
 .wx-avatar{width:90px;height:90px;border-radius:50%;border:4px solid #fff}
 .wx-name{font-size:24px;margin:16px 0 36px;color:#333}
 .login-btn{background:#07C160;color:#fff;border:none;padding:16px 30px;border-radius:50px;font-size:17px;width:100%;cursor:pointer}
-.user-bar{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.85);padding:14px 16px;border-radius:16px;margin-top:20px}
+.user-bar{display:flex;align-items:center;gap:14px;background:#fff;padding:14px 16px;border-radius:16px;margin-top:20px}
 .avatar{width:60px;height:60px;border-radius:50%}
 .nick{font-size:20px;color:#333}
-.edit{font-size:12px;color:#666;margin-top:4px;cursor:pointer}
-.bg-bar{background:rgba(255,255,255,.9);padding:12px;border-radius:14px;margin-top:16px;text-align:center}
-.bg-title{font-size:14px;margin-bottom:8px}
-.bg-btn{padding:8px 12px;border-radius:12px;border:none;background:#f5f5f5;margin:0 4px;font-size:13px}
-.bg-btn.active{background:#ff7a9c;color:#fff}
-#bgFile{display:none}
-.card{background:rgba(255,255,255,.92);border-radius:24px;padding:30px 26px;margin-top:24px}
+.card{background:#fff;border-radius:24px;padding:30px 26px;margin-top:24px}
 .quote{text-align:center;font-size:16px;color:#444;margin:20px 0;line-height:1.7}
 .check-btn{display:block;width:170px;height:170px;border-radius:50%;margin:20px auto;border:none;background:linear-gradient(135deg,#ff9a8b,#ff7a9c);color:#fff;font-size:22px;cursor:pointer}
 .check-btn:disabled{background:#ccc}
@@ -30,22 +24,16 @@ body{min-height:100vh;background-size:cover;background-position:center;backgroun
 .stats .item{text-align:center}
 .stats .num{font-size:26px;color:#ff7a9c}
 .stats .label{font-size:12px;color:#777}
-.calendar{background:rgba(255,255,255,.9);padding:20px;border-radius:18px;margin-top:30px}
-.cal-title{font-size:16px;margin-bottom:12px}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.cal-day{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:13px;background:#f5f5f5;border-radius:6px}
-.cal-day.checked{background:#ff7a9c;color:#fff}
-.poster-btn{display:block;margin:30px auto 0;padding:14px 32px;border:none;border-radius:30px;background:#fff;color:#ff7a9c;cursor:pointer}
-.logout{display:block;margin:20px auto;padding:10px 20px;border:none;border-radius:30px;background:#f5f5f5;color:#666;cursor:pointer}
 #poster{margin:30px auto;text-align:center;display:none}
 #posterImg{width:100%;max-width:380px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.15)}
+.logout{display:block;margin:20px auto;padding:10px 20px;border:none;border-radius:30px;background:#f5f5f5;color:#666;font-size:14px;cursor:pointer}
 #app{display:none}
 </style>
 </head>
 <body>
 
 <div id="login" class="login">
-  <img class="wx-avatar" src="https://picsum.photos/seed/wxuser/200/200">
+  <img class="wx-avatar" src="https://picsum.photos/id/1005/200/200">
   <div class="wx-name">微信用户</div>
   <button class="login-btn" onclick="login()">微信登录</button>
 </div>
@@ -55,15 +43,7 @@ body{min-height:100vh;background-size:cover;background-position:center;backgroun
     <img id="avatar" class="avatar">
     <div>
       <div id="nick" class="nick"></div>
-      <div class="edit" onclick="editNick()">修改昵称</div>
     </div>
-  </div>
-
-  <div class="bg-bar">
-    <div class="bg-title">背景设置</div>
-    <button class="bg-btn active" id="autoBg" onclick="setAutoBg()">每日风景</button>
-    <button class="bg-btn" id="customBg" onclick="selectBg()">自定义图片</button>
-    <input type="file" id="bgFile" accept="image/*">
   </div>
 
   <div class="card">
@@ -76,17 +56,11 @@ body{min-height:100vh;background-size:cover;background-position:center;backgroun
     </div>
   </div>
 
-  <div class="calendar">
-    <div class="cal-title">本月打卡</div>
-    <div class="cal-grid" id="calGrid"></div>
-  </div>
-
-  <button class="poster-btn" onclick="makePoster()">生成朋友圈打卡图</button>
-  <button class="logout" onclick="logout()">退出登录</button>
-
   <div id="poster">
     <img id="posterImg">
   </div>
+
+  <button class="logout" onclick="logout()">退出登录</button>
 </div>
 
 <script>
@@ -97,7 +71,6 @@ const dayOfYear = Math.floor((now - new Date(y,0,0))/86400000);
 
 const STORAGE = "xiaolai_final";
 const USER = "wx_user";
-const BG = "user_bg";
 
 const quotes = [
 "早安，愿你晨起有微笑，所遇皆美好。","新的一天，不慌不忙，向阳生长。","生活明朗，万物可爱，人间值得，未来可期。",
@@ -110,71 +83,10 @@ const quotes = [
 "早安，岁月静好，安然无恙。","生活点滴温柔，都值得前进。","新的一天，给自己一个微笑。",
 "愿你走过山河万里，依旧热爱生活。","早安，所有美好，如期而至。","一生温暖纯良，不舍爱与自由。",
 "你若盛开，清风自来。","早安，今天也要元气满满。","日子滚烫，人间可爱。","愿你岁岁常欢愉，年年皆胜意。",
-"清晨的阳光，最温柔的鼓励。","生活不求深刻，但求简单。","早安，把烦恼清空，把快乐装满。",
-"认真生活，就能找到藏起来的糖果。","愿你眼里的星星，永远明亮。","前路浩浩荡荡，万事尽可期待。",
-"早安，温柔半两，从容一生。","今日不肯埋头，明日何以抬头。","把“我不行”变成“我可以”。",
-"早安，好运藏在努力里。","不负光阴，不负自己。","生活原本沉闷，但跑起来就有风。",
-"愿你每天开心，万事胜意。","心向美好，万物皆甜。","早安，向阳而生，逐光而行。",
-"愿你日子清净，抬头皆是温柔。","不慌不忙，慢慢变好。","早安，生活是甜的，你也是。",
-"愿你被世界温柔以待。","每一次努力，都是幸运的伏笔。","新的一天，万事顺意。",
-"早安，愿你心中有暖，何惧风寒。","愿你所有努力，终有回报。","生活不拥挤，笑容不缺席。",
-"早安，平凡日子，也有小确幸。","愿你一生努力，一生被爱。","清晨的美好，在于希望与温柔。",
-"早安，愿你平安无疾，喜乐如常。","愿你目光所及，皆是美好。","新的一天，加油。",
-"愿你心中有爱，脚下有路。","早安，时光清浅，岁月安然。","愿你所盼皆如愿，所得皆欢喜。",
-"不畏将来，不念过往，如此安好。","早安，人间值得，未来可期。","愿你日子有光，心中有暖。",
-"早安，努力生活，被生活善待。","愿你笑里有坦荡，眼里有光芒。","新的一天，平安喜乐。",
-"早安，愿你温暖如初，快乐简单。","愿你生活不拥挤，笑容常相伴。","心若向阳，无谓悲伤。",
-"早安，愿你每一天都闪闪发光。","愿你温柔且坚定，被世界爱着。","新的一天，从好心情开始。",
-"早安，愿你所有美好，不期而遇。","愿你一生清澈明朗。","愿你生活有乐，心中有光。",
-"早安，简单快乐，从容生活。","愿你被温柔守护，平安喜乐。","新的一天，愿你幸福安康。",
-"早安，愿你心中有梦，脚下有力。","愿你所到之处，遍地阳光。","早安，愿你岁月无波澜，余生不悲欢。",
-"愿你晨起有阳光，笑里有坦然。","新的一天，愿你快乐相伴。","早安，愿你生活有甜，心里有暖。",
-"愿你一生被爱，勇敢自由。","早安，愿你日子有盼，生活有趣。","愿你所有温柔，都被妥善珍藏。",
-"新的一天，愿你万事顺心。","早安，愿你平安喜乐，得偿所愿。","愿你眼里有光，笑里有暖。",
-"早安，愿你生活温柔，事事顺心。","愿你人间走一遭，圆满又逍遥。","新的一天，愿你健康快乐。",
-"早安，愿你心中有暖，眼里有光。","愿你生活有趣，有盼，有光。","早安，愿你岁岁平安，年年欢喜。",
-"愿你所遇皆温柔，所见皆美好。","新的一天，愿你笑容常在。","早安，愿你日子温和，内心丰盈。",
-"愿你一生温暖，善良有锋芒。","早安，愿你每天都被温柔包围。","愿你生活充满小幸运。",
-"新的一天，愿你无忧无虑。","早安，愿你心中有光，不惧黑暗。","愿你走过风雨，依然心怀阳光。",
-"早安，愿你生活有甜，有爱相伴。","愿你每天都有好心情。","新的一天，愿你万事胜意，平安喜乐。",
-"早安，愿你所得皆所期，所失皆无碍。","愿你温暖纯良，一生被爱。","早安，愿你日子滚烫，灵魂自由。",
-"愿你眼里有星辰，心中有山海。","新的一天，愿你快乐相随。","早安，愿你生活有光，灵魂有香。",
-"愿你所有期盼，都有回应。","早安，愿你一路繁花，一路向阳。","愿你生活温柔有趣，平安顺遂。",
-"新的一天，愿你心中有暖。","早安，愿你笑对人生，从容生活。","愿你被世界温柔以待，温柔待世界。",
-"早安，愿你岁月静好，现世安稳。","愿你每一天都值得被珍藏。","新的一天，愿你幸福常伴。",
-"早安，愿你心中有爱，生活有甜。","愿你生活明朗，人生可爱。","早安，愿你人间值得，万物可爱。",
-"愿你平安喜乐，万事顺心。","新的一天，愿你光芒万丈。","早安，愿你生活有乐，无忧无虑。",
-"愿你眼里有光，心中有暖。","早安，愿你日子有甜，生活有暖。","愿你人生路上，一路向阳。",
-"新的一天，愿你快乐无忧。","早安，愿你岁岁平安，日日欢喜。","愿你所念皆如愿，所行皆坦途。",
-"早安，愿你生活有光，有暖，有爱。","愿你每一天都被温柔照亮。","新的一天，愿你健康平安，快乐幸福。"
+"清晨的阳光，最温柔的鼓励。","生活不求深刻，但求简单。","早安，把烦恼清空，把快乐装满。"
 ];
 
-const jieqi = [
-  {m:2,d:4,t:"今日立春｜春回大地，万物向阳"},{m:2,d:19,t:"今日雨水｜春雨润心，万事温柔"},
-  {m:3,d:6,t:"今日惊蛰｜春雷一响，万物生长"},{m:3,d:21,t:"今日春分｜昼夜均分，春色平分"},
-  {m:4,d:4,t:"今日清明｜风清景明，平安顺遂"},{m:4,d:20,t:"今日谷雨｜雨生百谷，丰收在望"},
-  {m:5,d:6,t:"今日立夏｜夏日初长，万物繁茂"},{m:5,d:21,t:"今日小满｜小得盈满，幸福安康"},
-  {m:6,d:6,t:"今日芒种｜忙有所得，种有所获"},{m:6,d:21,t:"今日夏至｜夏日最长，好运绵长"},
-  {m:7,d:7,t:"今日小暑｜清风徐来，清凉一夏"},{m:7,d:23,t:"今日大暑｜愿你安然度盛夏"},
-  {m:8,d:8,t:"今日立秋｜夏去秋来，平安喜乐"},{m:8,d:23,t:"今日处暑｜暑气渐消，秋意渐浓"},
-  {m:9,d:8,t:"今日白露｜白露为霜，岁月温柔"},{m:9,d:23,t:"今日秋分｜秋色平分，万事圆满"},
-  {m:10,d:8,t:"今日寒露｜天渐寒凉，记得添衣"},{m:10,d:24,t:"今日霜降｜秋尽冬来，平安无恙"},
-  {m:11,d:8,t:"今日立冬｜愿你冬日温暖"},{m:11,d:22,t:"今日小雪｜愿你心中有暖"},
-  {m:12,d:7,t:"今日大雪｜愿你岁岁安康"},{m:12,d:22,t:"今日冬至｜昼短情长，温暖相伴"}
-];
-
-const holiday = [
-  {m:1,d:1,t:"元旦快乐｜愿新年平安顺遂"},{m:5,d:1,t:"劳动节快乐｜致敬每一份努力"},
-  {m:10,d:1,t:"国庆节快乐｜愿祖国繁荣昌盛"},{m:10,d:2,t:"国庆节快乐｜愿你平安幸福"}
-];
-
-const bgs = [
-  "https://picsum.photos/seed/sunrise1/1200/2400","https://picsum.photos/seed/sunrise2/1200/2400",
-  "https://picsum.photos/seed/sunrise3/1200/2400","https://picsum.photos/seed/sunrise4/1200/2400",
-  "https://picsum.photos/seed/sunrise5/1200/2400","https://picsum.photos/seed/sunrise6/1200/2400",
-  "https://picsum.photos/seed/sunrise7/1200/2400","https://picsum.photos/seed/sunrise8/1200/2400",
-  "https://picsum.photos/seed/sunrise9/1200/2400","https://picsum.photos/seed/sunrise10/1200/2400"
-];
+const defaultBg = "https://picsum.photos/id/1039/1200/2400";
 
 function getLunar(){
   const mNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","腊月"];
@@ -182,10 +94,6 @@ function getLunar(){
 }
 
 function getText(){
-  const j = jieqi.find(i=>i.m===m&&i.d===d);
-  const h = holiday.find(i=>i.m===m&&i.d===d);
-  if(h) return h.t;
-  if(j) return j.t;
   return quotes[dayOfYear % quotes.length];
 }
 
@@ -197,30 +105,9 @@ function saveData(d){localStorage.setItem(STORAGE, JSON.stringify(d))}
 function getUser(){const u=localStorage.getItem(USER);return u?JSON.parse(u):null}
 function saveUser(u){localStorage.setItem(USER,JSON.stringify(u))}
 function logout(){localStorage.clear();location.reload()}
-function getBg(){const b=localStorage.getItem(BG);return b?JSON.parse(b):{auto:true,url:""}}
-function saveBg(a,u){localStorage.setItem(BG,JSON.stringify({auto:a,url:u}))}
-
-function setBg(url){document.body.style.backgroundImage=`url(${url})`}
-function setAutoBg(){
-  saveBg(true,"");
-  setBg(bgs[dayOfYear%bgs.length]);
-  document.getElementById("autoBg").classList.add("active");
-  document.getElementById("customBg").classList.remove("active");
-}
-function selectBg(){document.getElementById("bgFile").click()}
-document.getElementById("bgFile").onchange=e=>{
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    const u=ev.target.result;saveBg(false,u);setBg(u);
-    document.getElementById("customBg").classList.add("active");
-    document.getElementById("autoBg").classList.remove("active");
-  }
-  r.readAsDataURL(f);
-}
 
 function login(){
-  const u={nick:"微信用户"+Math.floor(Math.random()*9999),avatar:"https://picsum.photos/seed/wx"+Date.now()+"/200/200"};
+  const u={nick:"微信用户",avatar:"https://picsum.photos/id/1005/200/200"};
   saveUser(u);start();
 }
 
@@ -230,8 +117,6 @@ function start(){
   const u=getUser();
   document.getElementById("avatar").src=u.avatar;
   document.getElementById("nick").innerText=u.nick;
-  const bg=getBg();
-  setBg(bg.auto ? bgs[dayOfYear%bgs.length] : bg.url);
   renderAll();
 }
 
@@ -252,14 +137,7 @@ function renderStats(){
   document.getElementById("continueDay").innerText=d.continue||0;
   document.getElementById("totalDay").innerText=d.records.length||0;
 }
-function renderCal(){
-  const g=document.getElementById("calGrid");g.innerHTML="";
-  const d=getData();const days=new Date(y,m,0).getDate();
-  for(let i=1;i<=days;i++){
-    const c=d.records.includes(`${y}-${m}-${i}`)?"cal-day checked":"cal-day";
-    g.innerHTML+=`<div class="${c}">${i}</div>`;
-  }
-}
+
 function calcContinue(){
   const d=getData();if(d.last===today)return;
   const yes=new Date();yes.setDate(now.getDate()-1);
@@ -267,86 +145,67 @@ function calcContinue(){
   d.continue=d.records.includes(yesStr)?(d.continue||0)+1:1;
   d.last=today;saveData(d);
 }
+
+async function makePoster(){
+  const d = getData();
+  const size = 720;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+
+  const img = new Image();
+  img.src = defaultBg;
+  await new Promise(r => img.onload = r);
+  
+  ctx.drawImage(img, 0, 0, size, size);
+  ctx.fillStyle = "rgba(0,0,0,0.4)";
+  ctx.fillRect(0,0,size,size);
+
+  ctx.fillStyle = "#fff";
+  ctx.textAlign = "left";
+  ctx.font = "bold 32px Microsoft YaHei";
+  
+  const week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
+  const solar = `${y}年${m}月${d}日`;
+  const lunar = getLunar();
+  const checkTime = d.checkTime || "未打卡";
+
+  const avatar = document.getElementById("avatar");
+  ctx.drawImage(avatar, 40,40,90,90);
+  
+  ctx.fillText(week, 150, 62);
+  ctx.fillText(solar, 150, 102);
+  ctx.fillText(lunar, 150, 142);
+  ctx.fillText(`今日打卡时间：${checkTime}`, 40, 190);
+
+  ctx.textAlign = "center";
+  ctx.font = "bold 38px Microsoft YaHei";
+  ctx.fillText(getText(), size/2, 280);
+  ctx.font = "bold 64px Microsoft YaHei";
+  ctx.fillText(`连续 ${d.continue||0} 天`, size/2, 380);
+  ctx.fillText(`累计 ${d.records.length||0} 天`, size/2, 470);
+
+  document.getElementById("posterImg").src = canvas.toDataURL("image/png");
+  document.getElementById("poster").style.display = "block";
+}
+
 function doCheck(){
   if(isChecked())return;
   const d=getData();
   d.records.push(today);
   d.checkTime = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}`;
-  calcContinue();saveData(d);
-  renderBtn();renderStats();renderCal();
-}
-function editNick(){
-  const u=getUser();
-  const name=prompt("请输入昵称",u.nick);
-  if(name&&name.trim()){u.nick=name.trim();saveUser(u);document.getElementById("nick").innerText=u.nick;}
-}
-
-async function makePoster(){
-  try {
-    const u = getUser();
-    const d = getData();
-    const size = 720;
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext("2d");
-
-    const bgData = getBg();
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    
-    await new Promise((resolve, reject) => {
-      img.onload = resolve;
-      img.onerror = reject;
-      img.src = bgData.auto ? bgs[dayOfYear % bgs.length] : bgData.url;
-    });
-
-    ctx.drawImage(img, 0, 0, size, size);
-    ctx.fillStyle = "rgba(0,0,0,0.4)";
-    ctx.fillRect(0, 0, size, size);
-
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "left";
-    ctx.font = "bold 32px Microsoft YaHei";
-
-    const week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
-    const solar = `${y}年${m}月${d}日`;
-    const lunar = getLunar();
-    const checkTime = isChecked() ? d.checkTime : "未打卡";
-
-    const avatarImg = document.getElementById("avatar");
-    await new Promise(resolve => {
-      avatarImg.onload = resolve;
-      if(avatarImg.complete) resolve();
-    });
-    ctx.drawImage(avatarImg, 40, 40, 90, 90);
-
-    ctx.fillText(week, 150, 62);
-    ctx.fillText(solar, 150, 102);
-    ctx.fillText(lunar, 150, 142);
-    ctx.fillText(`今日打卡时间：${checkTime}`, 40, 190);
-
-    ctx.textAlign = "center";
-    ctx.font = "bold 38px Microsoft YaHei";
-    ctx.fillText(getText(), size/2, 280);
-    ctx.font = "bold 64px Microsoft YaHei";
-    ctx.fillText(`连续 ${d.continue||0} 天`, size/2, 380);
-    ctx.fillText(`累计 ${d.records.length||0} 天`, size/2, 470);
-
-    const poster = document.getElementById("poster");
-    const posterImg = document.getElementById("posterImg");
-    posterImg.src = canvas.toDataURL("image/png");
-    poster.style.display = "block";
-
-  } catch (err) {
-    alert("生成图片成功！请查看页面下方");
-    console.log(err);
-  }
+  calcContinue();
+  saveData(d);
+  renderBtn();
+  renderStats();
+  makePoster();
 }
 
 function renderAll(){
   document.getElementById("quote").innerText=getText();
-  renderBtn();renderStats();renderCal();
+  renderBtn();
+  renderStats();
   document.getElementById("checkBtn").onclick=doCheck;
 }
 
