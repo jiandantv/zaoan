@@ -1,136 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>早安打卡</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei", "YouYuan", sans-serif;font-weight:bold}
 body{
-  min-height:100vh;
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  background-attachment:fixed;
-  padding:20px;
-  transition:background 0.5s;
+  min-height:100vh;background-size:cover;background-position:center;background-attachment:fixed;padding:20px;transition:background .5s
 }
 .container{max-width:400px;margin:0 auto}
-.login{
-  background:rgba(255,255,255,0.95);
-  border-radius:24px;
-  padding:50px 30px;
-  margin:100px auto;
-  max-width:350px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1)
-}
-.wx-avatar{
-  width:90px;height:90px;border-radius:50%;
-  border:4px solid #fff;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1)
-}
-.wx-name{
-  font-size:24px;margin:16px 0 36px;color:#333
-}
-.login-btn{
-  background:#07c160;color:#fff;border:none;
-  padding:16px 30px;border-radius:50px;
-  font-size:17px;font-weight:bold;width:100%;
-  cursor:pointer
-}
-.user-bar{
-  display:flex;align-items:center;gap:14px;
-  background:rgba(255,255,255,0.85);
-  padding:14px 16px;border-radius:16px;
-  margin-top:20px;backdrop-filter:blur(6px)
-}
+.login{background:rgba(255,255,255,.95);border-radius:24px;padding:50px 30px;margin:100px auto;max-width:350px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.wx-avatar{width:90px;height:90px;border-radius:50%;border:4px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,.1)}
+.wx-name{font-size:24px;margin:16px 0 36px;color:#333}
+.login-btn{background:#07c160;color:#fff;border:none;padding:16px 30px;border-radius:50px;font-size:17px;width:100%;cursor:pointer}
+.user-bar{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.85);padding:14px 16px;border-radius:16px;margin-top:20px;backdrop-filter:blur(6px)}
 .avatar{width:60px;height:60px;border-radius:50%;object-fit:cover}
-.nick{font-size:20px;color:#333;font-weight:500}
-.edit{font-size:12px;color:#666;margin-top:4px}
-.bg-bar{
-  background:rgba(255,255,255,0.9);
-  padding:12px;border-radius:14px;
-  margin-top:16px;text-align:center
-}
-.bg-title{font-size:14px;color:#333;margin-bottom:8px}
-.bg-btn{
-  padding:8px 12px;border-radius:12px;
-  border:none;background:#f5f5f5;margin:0 4px;
-  font-size:13px;cursor:pointer
-}
+.nick{font-size:20px;color:#333}
+.edit{font-size:12px;color:#666;margin-top:4px;cursor:pointer}
+.bg-bar{background:rgba(255,255,255,.9);padding:12px;border-radius:14px;margin-top:16px;text-align:center}
+.bg-title{font-size:14px;margin-bottom:8px}
+.bg-btn{padding:8px 12px;border-radius:12px;border:none;background:#f5f5f5;margin:0 4px;font-size:13px;cursor:pointer}
 .bg-btn.active{background:#ff7a9c;color:#fff}
 #bgFile{display:none}
-.card{
-  background:rgba(255,255,255,0.92);
-  border-radius:24px;
-  padding:30px 26px;
-  margin-top:24px;
-  backdrop-filter:blur(6px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.08)
-}
-.date{text-align:center;font-size:16px;color:#444}
-.week{text-align:center;font-size:14px;color:#777;margin-top:4px}
-.quote{
-  text-align:center;font-size:16px;
-  color:#444;margin:20px 0;
-  line-height:1.7;font-style:italic
-}
-.check-btn{
-  display:block;width:170px;height:170px;
-  border-radius:50%;margin:20px auto;
-  border:none;background:linear-gradient(135deg,#ff9a8b,#ff7a9c);
-  color:#fff;font-size:22px;font-weight:bold;
-  box-shadow:0 10px 25px rgba(255,122,156,0.3);
-  cursor:pointer;transition:0.2s
-}
-.check-btn:active{transform:scale(0.96)}
+.card{background:rgba(255,255,255,.92);border-radius:24px;padding:30px 26px;margin-top:24px;backdrop-filter:blur(6px);box-shadow:0 8px 25px rgba(0,0,0,.08)}
+.quote{text-align:center;font-size:16px;color:#444;margin:20px 0;line-height:1.7}
+.check-btn{display:block;width:170px;height:170px;border-radius:50%;margin:20px auto;border:none;background:linear-gradient(135deg,#ff9a8b,#ff7a9c);color:#fff;font-size:22px;box-shadow:0 10px 25px rgba(255,122,156,.3);cursor:pointer}
+.check-btn:active{transform:scale(.96)}
 .check-btn.disabled{background:#ccc;box-shadow:none}
 .tip{text-align:center;font-size:14px;color:#555;margin-bottom:10px}
-.stats{
-  display:flex;justify-content:space-around;
-  padding-top:20px;border-top:1px solid #eee;margin-top:20px
-}
+.stats{display:flex;justify-content:space-around;padding-top:20px;border-top:1px solid #eee;margin-top:20px}
 .stats .item{text-align:center}
-.stats .num{font-size:26px;font-weight:bold;color:#ff7a9c}
+.stats .num{font-size:26px;color:#ff7a9c}
 .stats .label{font-size:12px;color:#777;margin-top:4px}
-.calendar{
-  background:rgba(255,255,255,0.9);
-  padding:20px;border-radius:18px;
-  margin-top:30px
-}
-.cal-title{font-size:16px;color:#333;margin-bottom:12px}
+.calendar{background:rgba(255,255,255,.9);padding:20px;border-radius:18px;margin-top:30px}
+.cal-title{font-size:16px;margin-bottom:12px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.cal-day{
-  aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
-  font-size:13px;background:#f5f5f5;border-radius:6px;color:#444
-}
+.cal-day{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:13px;background:#f5f5f5;border-radius:6px}
 .cal-day.checked{background:#ff7a9c;color:#fff}
-.poster-btn{
-  display:block;margin:30px auto 0;
-  padding:14px 32px;border:none;
-  border-radius:30px;background:#fff;color:#ff7a9c;
-  font-weight:bold;box-shadow:0 5px 15px rgba(0,0,0,0.1);
-  cursor:pointer
-}
-.logout{
-  display:block;margin:20px auto;
-  padding:10px 20px;border:none;
-  border-radius:30px;background:#f5f5f5;color:#666;
-  font-size:14px;cursor:pointer
-}
-#poster{
-  display:none;margin:30px auto;
-  max-width:380px;text-align:center
-}
-#posterImg{
-  width:100%;border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.15)
-}
+.poster-btn{display:block;margin:30px auto 0;padding:14px 32px;border:none;border-radius:30px;background:#fff;color:#ff7a9c;box-shadow:0 5px 15px rgba(0,0,0,.1);cursor:pointer}
+.logout{display:block;margin:20px auto;padding:10px 20px;border:none;border-radius:30px;background:#f5f5f5;color:#666;font-size:14px;cursor:pointer}
+#poster{display:none;margin:30px auto;max-width:380px;text-align:center}
+#posterImg{width:100%;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
 #app{display:none}
 </style>
 </head>
-
 <body>
 
 <div id="login" class="login">
@@ -156,20 +70,12 @@ body{
   </div>
 
   <div class="card">
-    <div class="date" id="date"></div>
-    <div class="week" id="week"></div>
     <div class="quote" id="quote"></div>
     <button class="check-btn" id="checkBtn">立即打卡</button>
     <div class="tip" id="tip"></div>
     <div class="stats">
-      <div class="item">
-        <div class="num" id="continueDay">0</div>
-        <div class="label">连续打卡</div>
-      </div>
-      <div class="item">
-        <div class="num" id="totalDay">0</div>
-        <div class="label">累计打卡</div>
-      </div>
+      <div class="item"><div class="num" id="continueDay">0</div><div class="label">连续打卡</div></div>
+      <div class="item"><div class="num" id="totalDay">0</div><div class="label">累计打卡</div></div>
     </div>
   </div>
 
@@ -192,342 +98,249 @@ const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate();
 const today = `${y}-${m}-${d}`;
 const dayOfYear = Math.floor((now - new Date(y,0,0))/86400000);
 
-const STORAGE = "xiaolai_morning";
-const USER = "wx_user_data";
+const STORAGE = "xiaolai_final";
+const USER = "wx_user";
 const BG = "user_bg";
 
-// ==================== 160句 小来风格早安语 ====================
 const quotes = [
-"早安，愿你晨起有微笑，所遇皆美好。","新的一天，不慌不忙，向阳生长。",
-"生活明朗，万物可爱，人间值得，未来可期。","清晨的风，会吹走所有烦恼。",
-"愿你眼中有光，心中有爱，一路春暖花开。","早安，把日子过成诗，温柔又可爱。",
-"保持热爱，奔赴山海，平凡日子也闪着光。","新的一天，愿你平安喜乐，万事顺遂。",
-"慢慢来，谁都有发光的机会。","早安，生活给你压力，你还它奇迹。",
-"每一个清晨，都是一个新的开始。","心向阳光，何惧路长。",
-"愿你以温柔待世界，世界以温柔待你。","早安，努力的人，运气不会差。",
-"生活简单就迷人，人心简单就幸福。","新的一天，遇见更好的自己。",
-"愿你所求皆如愿，所行化坦途。","早安，风是暖的，光是甜的。",
-"不辜负生活，不迷失方向。","愿你每天都有小惊喜，小幸福。",
-"心有光芒，必有远方。","早安，岁月静好，安然无恙。",
-"生活点滴温柔，都值得前进。","新的一天，给自己一个微笑。",
-"愿你走过山河万里，依旧热爱生活。","早安，所有美好，如期而至。",
-"一生温暖纯良，不舍爱与自由。","你若盛开，清风自来。",
-"早安，今天也要元气满满。","日子滚烫，人间可爱。",
-"愿你岁岁常欢愉，年年皆胜意。","清晨的阳光，最温柔的鼓励。",
-"生活不求深刻，但求简单。","早安，把烦恼清空，把快乐装满。",
-"认真生活，就能找到藏起来的糖果。","愿你眼里的星星，永远明亮。",
-"前路浩浩荡荡，万事尽可期待。","早安，温柔半两，从容一生。",
-"今日不肯埋头，明日何以抬头。","把“我不行”变成“我可以”。",
-"早安，好运藏在努力里。","不负光阴，不负自己。",
-"生活原本沉闷，但跑起来就有风。","愿你每天开心，万事胜意。",
-"心向美好，万物皆甜。","早安，向阳而生，逐光而行。",
-"愿你日子清净，抬头皆是温柔。","不慌不忙，慢慢变好。",
-"早安，生活是甜的，你也是。","愿你被世界温柔以待。",
-"每一次努力，都是幸运的伏笔。","新的一天，万事顺意。",
-"早安，愿你心中有暖，何惧风寒。","愿你所有努力，终有回报。",
-"生活不拥挤，笑容不缺席。","早安，平凡日子，也有小确幸。",
-"愿你一生努力，一生被爱。","清晨的美好，在于希望与温柔。",
-"早安，愿你平安无疾，喜乐如常。","愿你目光所及，皆是美好。",
-"新的一天，加油。","愿你心中有爱，脚下有路。",
-"早安，时光清浅，岁月安然。","愿你所盼皆如愿，所得皆欢喜。",
-"不畏将来，不念过往，如此安好。","早安，人间值得，未来可期。",
-"愿你日子有光，心中有暖。","早安，努力生活，被生活善待。",
-"愿你笑里有坦荡，眼里有光芒。","新的一天，平安喜乐。",
-"早安，愿你温暖如初，快乐简单。","愿你生活不拥挤，笑容常相伴。",
-"心若向阳，无谓悲伤。","早安，愿你每一天都闪闪发光。",
-"愿你温柔且坚定，被世界爱着。","新的一天，从好心情开始。",
-"早安，愿你所有美好，不期而遇。","愿你一生清澈明朗。",
-"愿你生活有乐，心中有光。","早安，简单快乐，从容生活。",
-"愿你被温柔守护，平安喜乐。","新的一天，愿你幸福安康。",
-"早安，愿你心中有梦，脚下有力。","愿你所到之处，遍地阳光。",
-"早安，愿你岁月无波澜，余生不悲欢。","愿你晨起有阳光，笑里有坦然。",
-"新的一天，愿你快乐相伴。","早安，愿你生活有甜，心里有暖。",
-"愿你一生被爱，勇敢自由。","早安，愿你日子有盼，生活有趣。",
-"愿你所有温柔，都被妥善珍藏。","新的一天，愿你万事顺心。",
-"早安，愿你平安喜乐，得偿所愿。","愿你眼里有光，笑里有暖。",
-"早安，愿你生活温柔，事事顺心。","愿你人间走一遭，圆满又逍遥。",
-"新的一天，愿你健康快乐。","早安，愿你心中有暖，眼里有光。",
-"愿你生活有趣，有盼，有光。","早安，愿你岁岁平安，年年欢喜。",
-"愿你所遇皆温柔，所见皆美好。","新的一天，愿你笑容常在。",
-"早安，愿你日子温和，内心丰盈。","愿你一生温暖，善良有锋芒。",
-"早安，愿你每天都被温柔包围。","愿你生活充满小幸运。",
-"新的一天，愿你无忧无虑。","早安，愿你心中有光，不惧黑暗。",
-"愿你走过风雨，依然心怀阳光。","早安，愿你生活有甜，有爱相伴。",
-"愿你每天都有好心情。","新的一天，愿你万事胜意，平安喜乐。",
-"早安，愿你所得皆所期，所失皆无碍。","愿你温暖纯良，一生被爱。",
-"早安，愿你日子滚烫，灵魂自由。","愿你眼里有星辰，心中有山海。",
-"新的一天，愿你快乐相随。","早安，愿你生活有光，灵魂有香。",
-"愿你所有期盼，都有回应。","早安，愿你一路繁花，一路向阳。",
-"愿你生活温柔有趣，平安顺遂。","新的一天，愿你心中有暖。",
-"早安，愿你笑对人生，从容生活。","愿你被世界温柔以待，温柔待世界。",
-"早安，愿你岁月静好，现世安稳。","愿你每一天都值得被珍藏。",
-"新的一天，愿你幸福常伴。","早安，愿你心中有爱，生活有甜。",
-"愿你生活明朗，人生可爱。","早安，愿你人间值得，万物可爱。",
-"愿你平安喜乐，万事顺心。","新的一天，愿你光芒万丈。",
-"早安，愿你生活有乐，无忧无虑。","愿你眼里有光，心中有暖。",
-"早安，愿你日子有甜，生活有暖。","愿你人生路上，一路向阳。",
-"新的一天，愿你快乐无忧。","早安，愿你岁岁平安，日日欢喜。",
-"愿你所念皆如愿，所行皆坦途。","早安，愿你生活有光，有暖，有爱。",
-"愿你每一天都被温柔照亮。","新的一天，愿你健康平安，快乐幸福。"
+"早安，愿你晨起有微笑，所遇皆美好。","新的一天，不慌不忙，向阳生长。","生活明朗，万物可爱，人间值得，未来可期。",
+"清晨的风，会吹走所有烦恼。","愿你眼中有光，心中有爱，一路春暖花开。","早安，把日子过成诗，温柔又可爱。",
+"保持热爱，奔赴山海，平凡日子也闪着光。","新的一天，愿你平安喜乐，万事顺遂。","慢慢来，谁都有发光的机会。",
+"早安，生活给你压力，你还它奇迹。","每一个清晨，都是一个新的开始。","心向阳光，何惧路长。",
+"愿你以温柔待世界，世界以温柔待你。","早安，努力的人，运气不会差。","生活简单就迷人，人心简单就幸福。",
+"新的一天，遇见更好的自己。","愿你所求皆如愿，所行化坦途。","早安，风是暖的，光是甜的。",
+"不辜负生活，不迷失方向。","愿你每天都有小惊喜，小幸福。","心有光芒，必有远方。",
+"早安，岁月静好，安然无恙。","生活点滴温柔，都值得前进。","新的一天，给自己一个微笑。",
+"愿你走过山河万里，依旧热爱生活。","早安，所有美好，如期而至。","一生温暖纯良，不舍爱与自由。",
+"你若盛开，清风自来。","早安，今天也要元气满满。","日子滚烫，人间可爱。","愿你岁岁常欢愉，年年皆胜意。",
+"清晨的阳光，最温柔的鼓励。","生活不求深刻，但求简单。","早安，把烦恼清空，把快乐装满。",
+"认真生活，就能找到藏起来的糖果。","愿你眼里的星星，永远明亮。","前路浩浩荡荡，万事尽可期待。",
+"早安，温柔半两，从容一生。","今日不肯埋头，明日何以抬头。","把“我不行”变成“我可以”。",
+"早安，好运藏在努力里。","不负光阴，不负自己。","生活原本沉闷，但跑起来就有风。",
+"愿你每天开心，万事胜意。","心向美好，万物皆甜。","早安，向阳而生，逐光而行。",
+"愿你日子清净，抬头皆是温柔。","不慌不忙，慢慢变好。","早安，生活是甜的，你也是。",
+"愿你被世界温柔以待。","每一次努力，都是幸运的伏笔。","新的一天，万事顺意。",
+"早安，愿你心中有暖，何惧风寒。","愿你所有努力，终有回报。","生活不拥挤，笑容不缺席。",
+"早安，平凡日子，也有小确幸。","愿你一生努力，一生被爱。","清晨的美好，在于希望与温柔。",
+"早安，愿你平安无疾，喜乐如常。","愿你目光所及，皆是美好。","新的一天，加油。",
+"愿你心中有爱，脚下有路。","早安，时光清浅，岁月安然。","愿你所盼皆如愿，所得皆欢喜。",
+"不畏将来，不念过往，如此安好。","早安，人间值得，未来可期。","愿你日子有光，心中有暖。",
+"早安，努力生活，被生活善待。","愿你笑里有坦荡，眼里有光芒。","新的一天，平安喜乐。",
+"早安，愿你温暖如初，快乐简单。","愿你生活不拥挤，笑容常相伴。","心若向阳，无谓悲伤。",
+"早安，愿你每一天都闪闪发光。","愿你温柔且坚定，被世界爱着。","新的一天，从好心情开始。",
+"早安，愿你所有美好，不期而遇。","愿你一生清澈明朗。","愿你生活有乐，心中有光。",
+"早安，简单快乐，从容生活。","愿你被温柔守护，平安喜乐。","新的一天，愿你幸福安康。",
+"早安，愿你心中有梦，脚下有力。","愿你所到之处，遍地阳光。","早安，愿你岁月无波澜，余生不悲欢。",
+"愿你晨起有阳光，笑里有坦然。","新的一天，愿你快乐相伴。","早安，愿你生活有甜，心里有暖。",
+"愿你一生被爱，勇敢自由。","早安，愿你日子有盼，生活有趣。","愿你所有温柔，都被妥善珍藏。",
+"新的一天，愿你万事顺心。","早安，愿你平安喜乐，得偿所愿。","愿你眼里有光，笑里有暖。",
+"早安，愿你生活温柔，事事顺心。","愿你人间走一遭，圆满又逍遥。","新的一天，愿你健康快乐。",
+"早安，愿你心中有暖，眼里有光。","愿你生活有趣，有盼，有光。","早安，愿你岁岁平安，年年欢喜。",
+"愿你所遇皆温柔，所见皆美好。","新的一天，愿你笑容常在。","早安，愿你日子温和，内心丰盈。",
+"愿你一生温暖，善良有锋芒。","早安，愿你每天都被温柔包围。","愿你生活充满小幸运。",
+"新的一天，愿你无忧无虑。","早安，愿你心中有光，不惧黑暗。","愿你走过风雨，依然心怀阳光。",
+"早安，愿你生活有甜，有爱相伴。","愿你每天都有好心情。","新的一天，愿你万事胜意，平安喜乐。",
+"早安，愿你所得皆所期，所失皆无碍。","愿你温暖纯良，一生被爱。","早安，愿你日子滚烫，灵魂自由。",
+"愿你眼里有星辰，心中有山海。","新的一天，愿你快乐相随。","早安，愿你生活有光，灵魂有香。",
+"愿你所有期盼，都有回应。","早安，愿你一路繁花，一路向阳。","愿你生活温柔有趣，平安顺遂。",
+"新的一天，愿你心中有暖。","早安，愿你笑对人生，从容生活。","愿你被世界温柔以待，温柔待世界。",
+"早安，愿你岁月静好，现世安稳。","愿你每一天都值得被珍藏。","新的一天，愿你幸福常伴。",
+"早安，愿你心中有爱，生活有甜。","愿你生活明朗，人生可爱。","早安，愿你人间值得，万物可爱。",
+"愿你平安喜乐，万事顺心。","新的一天，愿你光芒万丈。","早安，愿你生活有乐，无忧无虑。",
+"愿你眼里有光，心中有暖。","早安，愿你日子有甜，生活有暖。","愿你人生路上，一路向阳。",
+"新的一天，愿你快乐无忧。","早安，愿你岁岁平安，日日欢喜。","愿你所念皆如愿，所行皆坦途。",
+"早安，愿你生活有光，有暖，有爱。","愿你每一天都被温柔照亮。","新的一天，愿你健康平安，快乐幸福。"
 ];
 
-// ==================== 24节气 ====================
 const jieqi = [
-{day:1,name:"小寒"},{day:5,name:"小寒"},
-{day:20,name:"大寒"},{day:21,name:"大寒"},
-{day:4,name:"立春"},{day:5,name:"立春"},
-{day:18,name:"雨水"},{day:19,name:"雨水"},
-{day:5,name:"惊蛰"},{day:6,name:"惊蛰"},
-{day:20,name:"春分"},{day:21,name:"春分"},
-{day:4,name:"清明"},{day:5,name:"清明"},
-{day:19,name:"谷雨"},{day:20,name:"谷雨"},
-{day:5,name:"立夏"},{day:6,name:"立夏"},
-{day:20,name:"小满"},{day:21,name:"小满"},
-{day:5,name:"芒种"},{day:6,name:"芒种"},
-{day:21,name:"夏至"},{day:22,name:"夏至"},
-{day:6,name:"小暑"},{day:7,name:"小暑"},
-{day:22,name:"大暑"},{day:23,name:"大暑"},
-{day:7,name:"立秋"},{day:8,name:"立秋"},
-{day:22,name:"处暑"},{day:23,name:"处暑"},
-{day:7,name:"白露"},{day:8,name:"白露"},
-{day:22,name:"秋分"},{day:23,name:"秋分"},
-{day:7,name:"寒露"},{day:8,name:"寒露"},
-{day:23,name:"霜降"},{day:24,name:"霜降"},
-{day:7,name:"立冬"},{day:8,name:"立冬"},
-{day:22,name:"小雪"},{day:23,name:"小雪"},
-{day:7,name:"大雪"},{day:8,name:"大雪"},
-{day:21,name:"冬至"},{day:22,name:"冬至"}
+  {m:2,d:4,t:"今日立春｜春回大地，万物向阳"},
+  {m:2,d:10,t:"今日雨水｜春雨润心，万事温柔"},
+  {m:3,d:5,t:"今日惊蛰｜春雷一响，万物生长"},
+  {m:3,d:20,t:"今日春分｜昼夜均分，春色平分"},
+  {m:4,d:4,t:"今日清明｜风清景明，平安顺遂"},
+  {m:4,d:20,t:"今日谷雨｜雨生百谷，丰收在望"},
+  {m:5,d:5,t:"今日立夏｜夏日初长，万物繁茂"},
+  {m:5,d:21,t:"今日小满｜小得盈满，幸福安康"},
+  {m:6,d:5,t:"今日芒种｜忙有所得，种有所获"},
+  {m:6,d:21,t:"今日夏至｜夏日最长，好运绵长"},
+  {m:7,d:7,t:"今日小暑｜清风徐来，清凉一夏"},
+  {m:7,d:22,t:"今日大暑｜愿你安然度盛夏"},
+  {m:8,d:7,t:"今日立秋｜夏去秋来，平安喜乐"},
+  {m:8,d:23,t:"今日处暑｜暑气渐消，秋意渐浓"},
+  {m:9,d:7,t:"今日白露｜白露为霜，岁月温柔"},
+  {m:9,d:23,t:"今日秋分｜秋色平分，万事圆满"},
+  {m:10,d:8,t:"今日寒露｜天渐寒凉，记得添衣"},
+  {m:10,d:24,t:"今日霜降｜秋尽冬来，平安无恙"},
+  {m:11,d:7,t:"今日立冬｜愿你冬日温暖"},
+  {m:11,d:22,t:"今日小雪｜愿你心中有暖"},
+  {m:12,d:7,t:"今日大雪｜愿你岁岁安康"},
+  {m:12,d:21,t:"今日冬至｜昼短情长，温暖相伴"}
 ];
 
-// ==================== 节假日 ====================
 const holiday = [
-{m:1,d:1,text:"元旦快乐｜愿新年平安顺遂"},
-{m:1,d:2,text:"元旦快乐｜愿新年万事胜意"},
-{m:5,d:1,text:"劳动节快乐｜致敬每一份努力"},
-{m:5,d:2,text:"劳动节快乐｜愿生活轻松美好"},
-{m:5,d:3,text:"劳动节快乐｜平安喜乐，无忧无虑"},
-{m:10,d:1,text:"国庆节快乐｜愿祖国繁荣昌盛"},
-{m:10,d:2,text:"国庆节快乐｜愿你平安幸福"},
-{m:10,d:3,text:"国庆节快乐｜愿生活蒸蒸日上"},
-{m:10,d:4,text:"国庆节快乐｜阖家安康，万事顺意"},
-{m:10,d:5,text:"国庆节快乐｜日子滚烫，人间可爱"},
-{m:12,d:20,text:"冬至快乐｜愿温暖常伴"},
-{m:12,d:21,text:"冬至快乐｜愿你平安无恙"},
-{m:12,d:22,text:"冬至快乐｜岁岁安康，四季无忧"},
-{m:4,d:4,text:"清明安康｜愿岁月温柔，故人安好"},
-{m:4,d:5,text:"清明安康｜愿时光清浅，平安无恙"},
-{m:2,d:10,text:"立春快乐｜万物复苏，春暖花开"},
-{m:2,d:11,text:"立春快乐｜春回大地，万事可期"}
+  {m:1,d:1,t:"元旦快乐｜愿新年平安顺遂"},
+  {m:5,d:1,t:"劳动节快乐｜致敬每一份努力"},
+  {m:10,d:1,t:"国庆节快乐｜愿祖国繁荣昌盛"},
+  {m:12,d:21,t:"冬至快乐｜愿温暖常伴"},
+  {m:12,d:22,t:"冬至快乐｜愿你平安无恙"}
 ];
 
-// ==================== 风景背景 ====================
 const bgs = [
-"https://picsum.photos/seed/sunrise1/1200/2400","https://picsum.photos/seed/sunrise2/1200/2400",
-"https://picsum.photos/seed/sunrise3/1200/2400","https://picsum.photos/seed/sunrise4/1200/2400",
-"https://picsum.photos/seed/sunrise5/1200/2400","https://picsum.photos/seed/sunrise6/1200/2400",
-"https://picsum.photos/seed/sunrise7/1200/2400","https://picsum.photos/seed/sunrise8/1200/2400",
-"https://picsum.photos/seed/sunrise9/1200/2400","https://picsum.photos/seed/sunrise10/1200/2400",
-"https://picsum.photos/seed/sunrise11/1200/2400","https://picsum.photos/seed/sunrise12/1200/2400",
-"https://picsum.photos/seed/sunrise13/1200/2400","https://picsum.photos/seed/sunrise14/1200/2400",
-"https://picsum.photos/seed/sunrise15/1200/2400"
+  "https://picsum.photos/seed/sunrise1/1200/2400","https://picsum.photos/seed/sunrise2/1200/2400",
+  "https://picsum.photos/seed/sunrise3/1200/2400","https://picsum.photos/seed/sunrise4/1200/2400",
+  "https://picsum.photos/seed/sunrise5/1200/2400","https://picsum.photos/seed/sunrise6/1200/2400",
+  "https://picsum.photos/seed/sunrise7/1200/2400","https://picsum.photos/seed/sunrise8/1200/2400",
+  "https://picsum.photos/seed/sunrise9/1200/2400","https://picsum.photos/seed/sunrise10/1200/2400"
 ];
 
-const qIdx = dayOfYear % quotes.length;
-const bgIdx = dayOfYear % bgs.length;
+function getLunar(){
+  const lunar = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
+  const ld = now.getDate();
+  const lm = now.getMonth();
+  return lunar[lm] + ld + "日";
+}
 
-// ==================== 工具 ====================
+function getText(){
+  const jq = jieqi.find(i=>i.m===m&&i.d===d);
+  const hd = holiday.find(i=>i.m===m&&i.d===d);
+  if(hd) return hd.t;
+  if(jq) return jq.t;
+  return quotes[dayOfYear%quotes.length];
+}
+
 function getData(){
-  let d = localStorage.getItem(STORAGE);
-  return d ? JSON.parse(d) : {records:[], continue:0, last:""};
+  const d = localStorage.getItem(STORAGE);
+  return d?JSON.parse(d):{records:[],continue:0,last:"",checkTime:""};
 }
 function saveData(d){localStorage.setItem(STORAGE,JSON.stringify(d))}
-
 function getUser(){
-  let u = localStorage.getItem(USER);
-  return u ? JSON.parse(u) : null;
+  const u = localStorage.getItem(USER);
+  return u?JSON.parse(u):null;
 }
 function saveUser(u){localStorage.setItem(USER,JSON.stringify(u))}
 function logout(){localStorage.clear();location.reload()}
-
 function getBg(){
-  let b = localStorage.getItem(BG);
-  return b ? JSON.parse(b) : {auto:true, url:""};
+  const b = localStorage.getItem(BG);
+  return b?JSON.parse(b):{auto:true,url:""};
 }
-function saveBg(auto,url){
-  localStorage.setItem(BG,JSON.stringify({auto,url}));
-}
+function saveBg(a,u){localStorage.setItem(BG,JSON.stringify({auto:a,url:u}))}
 
-// ==================== 节气/节日判断 ====================
-function getSpecialText(){
-  let jq = jieqi.find(i=>i.m===m&&i.day===d);
-  let hd = holiday.find(i=>i.m===m&&i.d===d);
-  if(hd) return hd.text;
-  if(jq) return `今日${jq.name}｜早安，愿时节安康，岁月温柔。`;
-  return quotes[qIdx];
-}
-
-// ==================== 背景 ====================
-function setBg(url){document.body.style.backgroundImage=`url(${url})`}
+function setBg(u){document.body.style.backgroundImage=`url(${u})`}
 function setAutoBg(){
   saveBg(true,"");
-  setBg(bgs[bgIdx]);
+  setBg(bgs[dayOfYear%bgs.length]);
   document.getElementById("autoBg").classList.add("active");
   document.getElementById("customBg").classList.remove("active");
 }
 function selectBg(){document.getElementById("bgFile").click()}
 document.getElementById("bgFile").onchange=e=>{
-  let f = e.target.files[0];
-  if(!f)return;
-  let r = new FileReader();
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
   r.onload=ev=>{
-    let url = ev.target.result;
-    saveBg(false,url);
-    setBg(url);
+    const u=ev.target.result;saveBg(false,u);setBg(u);
     document.getElementById("customBg").classList.add("active");
     document.getElementById("autoBg").classList.remove("active");
   }
   r.readAsDataURL(f);
 }
 
-// ==================== 登录 ====================
 function login(){
-  let user = {
-    nick:"微信用户"+Math.floor(Math.random()*9999),
-    avatar:"https://picsum.photos/seed/wx"+Date.now()+"/200/200"
-  }
-  saveUser(user);
-  start();
+  const u={nick:"微信用户"+Math.floor(Math.random()*9999),avatar:"https://picsum.photos/seed/wx"+Date.now()+"/200/200"};
+  saveUser(u);start();
 }
 
-// ==================== 启动 ====================
 function start(){
   document.getElementById("login").style.display="none";
   document.getElementById("app").style.display="block";
-  let u = getUser();
-  document.getElementById("avatar").src = u.avatar;
-  document.getElementById("nick").innerText = u.nick;
-  loadBg();
+  const u=getUser();
+  document.getElementById("avatar").src=u.avatar;
+  document.getElementById("nick").innerText=u.nick;
+  const b=getBg();
+  if(!b.auto&&b.url)setBg(b.url);else setBg(bgs[dayOfYear%bgs.length]);
   renderAll();
 }
 
-function loadBg(){
-  let b = getBg();
-  if(!b.auto && b.url){
-    setBg(b.url);
-    document.getElementById("customBg").classList.add("active");
-    document.getElementById("autoBg").classList.remove("active");
-  }else{
-    setBg(bgs[bgIdx]);
-  }
-}
-
-// ==================== 渲染 ====================
-function renderDate(){
-  document.getElementById("date").innerText=`${y}年${m}月${d}日`;
-  let w=["日","一","二","三","四","五","六"];
-  document.getElementById("week").innerText="星期"+w[now.getDay()];
-  document.getElementById("quote").innerText=getSpecialText();
-}
-
 function isCheck(){return getData().records.includes(today)}
-
 function renderBtn(){
-  let btn = document.getElementById("checkBtn");
-  let tip = document.getElementById("tip");
+  const btn=document.getElementById("checkBtn");
+  const tip=document.getElementById("tip");
   if(isCheck()){
-    btn.innerText="今日已打卡";
-    btn.classList.add("disabled");
+    btn.innerText="今日已打卡";btn.classList.add("disabled");
     tip.innerText="✅ 已完成早安打卡";
   }else{
-    btn.innerText="立即打卡";
-    btn.classList.remove("disabled");
+    btn.innerText="立即打卡";btn.classList.remove("disabled");
     tip.innerText="新的一天，加油！";
   }
 }
-
 function renderStats(){
-  let d = getData();
-  document.getElementById("continueDay").innerText = d.continue || 0;
-  document.getElementById("totalDay").innerText = d.records.length || 0;
+  const d=getData();
+  document.getElementById("continueDay").innerText=d.continue||0;
+  document.getElementById("totalDay").innerText=d.records.length||0;
 }
-
 function renderCal(){
-  let g = document.getElementById("calGrid");
-  g.innerHTML="";
-  let d = getData();
-  let days = new Date(y,m,0).getDate();
+  const g=document.getElementById("calGrid");g.innerHTML="";
+  const d=getData();const days=new Date(y,m,0).getDate();
   for(let i=1;i<=days;i++){
-    let c = d.records.includes(`${y}-${m}-${i}`) ? "cal-day checked" : "cal-day";
+    const c=d.records.includes(`${y}-${m}-${i}`)?"cal-day checked":"cal-day";
     g.innerHTML+=`<div class="${c}">${i}</div>`;
   }
 }
-
 function calcContinue(){
-  let d = getData();
-  if(d.last === today) return;
-  let yes = new Date(); yes.setDate(d-1);
-  let yesStr = `${yes.getFullYear()}-${yes.getMonth()+1}-${yes.getDate()}`;
-  d.continue = d.records.includes(yesStr) ? (d.continue||0)+1 : 1;
-  d.last = today;
-  saveData(d);
+  const d=getData();if(d.last===today)return;
+  const yes=new Date();yes.setDate(d-1);
+  const yesStr=`${yes.getFullYear()}-${yes.getMonth()+1}-${yes.getDate()}`;
+  d.continue=d.records.includes(yesStr)?(d.continue||0)+1:1;
+  d.last=today;saveData(d);
 }
-
 function doCheck(){
   if(isCheck())return;
-  let d = getData();
+  const d=getData();
   d.records.push(today);
-  calcContinue();
-  saveData(d);
-  renderBtn(); renderStats(); renderCal();
+  d.checkTime=`${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}`;
+  calcContinue();saveData(d);
+  renderBtn();renderStats();renderCal();
 }
-
 function editNick(){
-  let u = getUser();
-  let name = prompt("请输入昵称",u.nick);
-  if(name && name.trim()){
-    u.nick = name.trim();
-    saveUser(u);
-    document.getElementById("nick").innerText = u.nick;
-  }
+  const u=getUser();
+  const name=prompt("请输入昵称",u.nick);
+  if(name&&name.trim()){u.nick=name.trim();saveUser(u);document.getElementById("nick").innerText=u.nick;}
 }
 
-// ==================== 朋友圈海报 ====================
 function makePoster(){
-  let u = getUser();
-  let d = getData();
-  let size = 720;
-  let canvas = document.createElement("canvas");
-  canvas.width=size; canvas.height=size;
-  let ctx = canvas.getContext("2d");
-
-  let img = new Image();
-  img.crossOrigin="anonymous";
-  let b = getBg();
-  img.src = b.auto ? bgs[bgIdx] : b.url;
-
+  const u=getUser();
+  const d=getData();
+  const size=720;
+  const canvas=document.createElement("canvas");
+  canvas.width=size;canvas.height=size;
+  const ctx=canvas.getContext("2d");
+  const img=new Image();img.crossOrigin="anonymous";
+  const bgSetting=getBg();
+  img.src=bgSetting.auto?bgs[dayOfYear%bgs.length]:bgSetting.url;
   img.onload=()=>{
     ctx.drawImage(img,0,0,size,size);
-    ctx.fillStyle="rgba(0,0,0,0.35)";
+    ctx.fillStyle="rgba(0,0,0,.4)";
     ctx.fillRect(0,0,size,size);
 
     ctx.fillStyle="#fff";
+    ctx.textAlign="left";
+    ctx.font="bold 32px sans-serif";
+    const week=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
+    const solar=`${y}年${m}月${d}日`;
+    const lunar=getLunar();
+    const checkTime=isCheck()?d.checkTime:"未打卡";
+
+    ctx.drawImage(document.getElementById("avatar"),40,40,90,90);
+    ctx.fillText(week,150,60);
+    ctx.fillText(solar,150,100);
+    ctx.fillText(lunar,150,140);
+    ctx.fillText(`今日打卡时间：${checkTime}`,40,160);
+
     ctx.textAlign="center";
-
-    ctx.font="bold 46px sans-serif";
-    ctx.fillText(u.nick, size/2, 110);
-
-    ctx.font="28px sans-serif";
-    ctx.fillText(`${y}年${m}月${d}日`,size/2,160);
-
-    ctx.font="italic 32px sans-serif";
-    ctx.fillText(getSpecialText(),size/2,240);
-
-    ctx.font="bold 58px sans-serif";
-    ctx.fillText(`连续 ${d.continue} 天`,size/2,340);
-    ctx.fillText(`累计 ${d.records.length} 天`,size/2,420);
-
-    ctx.font="26px sans-serif";
-    ctx.fillText("早安打卡 · 遇见更好的自己",size/2,620);
+    ctx.font="bold 36px sans-serif";
+    ctx.fillText(getText(),size/2,280);
+    ctx.font="bold 60px sans-serif";
+    ctx.fillText(`连续 ${d.continue||0} 天`,size/2,380);
+    ctx.fillText(`累计 ${d.records.length||0} 天`,size/2,470);
 
     document.getElementById("poster").style.display="block";
     document.getElementById("posterImg").src=canvas.toDataURL("image/png");
@@ -535,10 +348,8 @@ function makePoster(){
 }
 
 function renderAll(){
-  renderDate();
-  renderBtn();
-  renderStats();
-  renderCal();
+  document.getElementById("quote").innerText=getText();
+  renderBtn();renderStats();renderCal();
   document.getElementById("checkBtn").onclick=doCheck;
 }
 
