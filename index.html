@@ -5,211 +5,401 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>早安打卡</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei","YouYuan",sans-serif;font-weight:700}
-body{min-height:100vh;background:#f4f7fa;padding:20px}
-.container{max-width:400px;margin:0 auto}
-.login{background:#fff;border-radius:24px;padding:50px 30px;margin:100px auto;max-width:350px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
-.wx-avatar{width:90px;height:90px;border-radius:50%;border:4px solid #fff}
-.wx-name{font-size:24px;margin:16px 0 36px;color:#333}
-.login-btn{background:#07C160;color:#fff;border:none;padding:16px 30px;border-radius:50px;font-size:17px;width:100%;cursor:pointer}
-.user-bar{display:flex;align-items:center;gap:14px;background:#fff;padding:14px 16px;border-radius:16px;margin-top:20px}
-.avatar{width:60px;height:60px;border-radius:50%}
-.nick{font-size:20px;color:#333}
-.card{background:#fff;border-radius:24px;padding:30px 26px;margin-top:24px}
-.quote{text-align:center;font-size:16px;color:#444;margin:20px 0;line-height:1.7}
-.check-btn{display:block;width:170px;height:170px;border-radius:50%;margin:20px auto;border:none;background:linear-gradient(135deg,#ff9a8b,#ff7a9c);color:#fff;font-size:22px;cursor:pointer}
-.check-btn:disabled{background:#ccc}
-.tip{text-align:center;font-size:14px;color:#555}
-.stats{display:flex;justify-content:space-around;padding-top:20px;border-top:1px solid #eee;margin-top:20px}
-.stats .item{text-align:center}
-.stats .num{font-size:26px;color:#ff7a9c}
-.stats .label{font-size:12px;color:#777}
-#poster{margin:30px auto;text-align:center;display:none}
-#posterImg{width:100%;max-width:380px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.15)}
-.logout{display:block;margin:20px auto;padding:10px 20px;border:none;border-radius:30px;background:#f5f5f5;color:#666;font-size:14px;cursor:pointer}
-#app{display:none}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", "YouYuan", sans-serif;
+  font-weight: bold;
+}
+body {
+  background: #f5f5f5;
+  padding: 20px;
+}
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.login-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+.login-btn {
+  background: #07c160;
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.main-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+.check-btn {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff9a8b, #ff7a9c);
+  color: #fff;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+.check-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.tip {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+}
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+.stats-item {
+  text-align: center;
+}
+.stats-num {
+  font-size: 32px;
+  color: #ff7a9c;
+}
+.stats-label {
+  font-size: 14px;
+  color: #777;
+  margin-top: 4px;
+}
+#poster {
+  margin: 30px auto;
+  text-align: center;
+  display: none;
+}
+#poster-img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+.logout-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+}
+#app {
+  display: none;
+}
 </style>
 </head>
 <body>
 
-<div id="login" class="login">
-  <img class="wx-avatar" src="https://picsum.photos/id/1005/200/200">
-  <div class="wx-name">微信用户</div>
-  <button class="login-btn" onclick="login()">微信登录</button>
-</div>
+<div class="container">
+  <!-- 登录页 -->
+  <div id="login" class="login-card">
+    <img src="https://picsum.photos/id/1005/100/100" style="border-radius:50%;width:80px;height:80px;">
+    <div style="font-size:20px;margin-top:10px;">微信用户</div>
+    <button class="login-btn" onclick="login()">微信登录</button>
+  </div>
 
-<div id="app" class="container">
-  <div class="user-bar">
-    <img id="avatar" class="avatar">
-    <div>
-      <div id="nick" class="nick"></div>
+  <!-- 主页面 -->
+  <div id="app">
+    <div class="main-card">
+      <div id="quote" style="font-size:18px;line-height:1.8;color:#333;"></div>
+      <button class="check-btn" id="checkBtn">立即打卡</button>
+      <div class="tip" id="tip"></div>
+      <div class="stats">
+        <div class="stats-item">
+          <div class="stats-num" id="continueDay">0</div>
+          <div class="stats-label">连续打卡</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-num" id="totalDay">0</div>
+          <div class="stats-label">累计打卡</div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="quote" id="quote"></div>
-    <button class="check-btn" id="checkBtn">立即打卡</button>
-    <div class="tip" id="tip"></div>
-    <div class="stats">
-      <div class="item"><div class="num" id="continueDay">0</div><div class="label">连续打卡</div></div>
-      <div class="item"><div class="num" id="totalDay">0</div><div class="label">累计打卡</div></div>
+    <!-- 生成的海报 -->
+    <div id="poster">
+      <img id="poster-img">
     </div>
-  </div>
 
-  <div id="poster">
-    <img id="posterImg">
+    <button class="logout-btn" onclick="logout()">退出登录</button>
   </div>
-
-  <button class="logout" onclick="logout()">退出登录</button>
 </div>
 
 <script>
+// 核心数据
 const now = new Date();
-const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate();
+const y = now.getFullYear();
+const m = now.getMonth() + 1;
+const d = now.getDate();
 const today = `${y}-${m}-${d}`;
-const dayOfYear = Math.floor((now - new Date(y,0,0))/86400000);
+const dayOfYear = Math.floor((now - new Date(y, 0, 0)) / 86400000);
 
-const STORAGE = "xiaolai_final";
-const USER = "wx_user";
+// 本地存储key
+const STORAGE_KEY = "morning_checkin_data";
+const USER_KEY = "morning_checkin_user";
 
+// 早安语录
 const quotes = [
-"早安，愿你晨起有微笑，所遇皆美好。","新的一天，不慌不忙，向阳生长。","生活明朗，万物可爱，人间值得，未来可期。",
-"清晨的风，会吹走所有烦恼。","愿你眼中有光，心中有爱，一路春暖花开。","早安，把日子过成诗，温柔又可爱。",
-"保持热爱，奔赴山海，平凡日子也闪着光。","新的一天，愿你平安喜乐，万事顺遂。","慢慢来，谁都有发光的机会。",
-"早安，生活给你压力，你还它奇迹。","每一个清晨，都是一个新的开始。","心向阳光，何惧路长。",
-"愿你以温柔待世界，世界以温柔待你。","早安，努力的人，运气不会差。","生活简单就迷人，人心简单就幸福。",
-"新的一天，遇见更好的自己。","愿你所求皆如愿，所行化坦途。","早安，风是暖的，光是甜的。",
-"不辜负生活，不迷失方向。","愿你每天都有小惊喜，小幸福。","心有光芒，必有远方。",
-"早安，岁月静好，安然无恙。","生活点滴温柔，都值得前进。","新的一天，给自己一个微笑。",
-"愿你走过山河万里，依旧热爱生活。","早安，所有美好，如期而至。","一生温暖纯良，不舍爱与自由。",
-"你若盛开，清风自来。","早安，今天也要元气满满。","日子滚烫，人间可爱。","愿你岁岁常欢愉，年年皆胜意。",
-"清晨的阳光，最温柔的鼓励。","生活不求深刻，但求简单。","早安，把烦恼清空，把快乐装满。"
+  "早上给自己一个微笑，种下一天的阳光",
+  "早安，愿你晨起有微笑，所遇皆美好",
+  "新的一天，不慌不忙，向阳生长",
+  "生活明朗，万物可爱，人间值得，未来可期"
 ];
 
-const defaultBg = "https://picsum.photos/id/1039/1200/2400";
+// 海报背景图（固定用你要的枫叶图，解决跨域）
+const POSTER_BG = "https://picsum.photos/id/1039/1200/1200";
 
-function getLunar(){
-  const mNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","腊月"];
-  return mNames[now.getMonth()] + now.getDate() + "日";
+// 农历月份（简化版，直接对应公历月份）
+const lunarMonths = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","腊月"];
+
+// 获取当前农历
+function getLunarDate() {
+  return `${lunarMonths[now.getMonth()]}${d}日`;
 }
 
-function getText(){
+// 获取早安文案
+function getQuote() {
   return quotes[dayOfYear % quotes.length];
 }
 
-function getData(){
-  const d = localStorage.getItem(STORAGE);
-  return d ? JSON.parse(d) : {records:[], continue:0, last:"", checkTime:""};
-}
-function saveData(d){localStorage.setItem(STORAGE, JSON.stringify(d))}
-function getUser(){const u=localStorage.getItem(USER);return u?JSON.parse(u):null}
-function saveUser(u){localStorage.setItem(USER,JSON.stringify(u))}
-function logout(){localStorage.clear();location.reload()}
-
-function login(){
-  const u={nick:"微信用户",avatar:"https://picsum.photos/id/1005/200/200"};
-  saveUser(u);start();
+// 获取打卡数据
+function getCheckinData() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  return data ? JSON.parse(data) : {
+    records: [],
+    continueDays: 0,
+    lastCheckin: "",
+    checkinTime: ""
+  };
 }
 
-function start(){
-  document.getElementById("login").style.display="none";
-  document.getElementById("app").style.display="block";
-  const u=getUser();
-  document.getElementById("avatar").src=u.avatar;
-  document.getElementById("nick").innerText=u.nick;
+// 保存打卡数据
+function saveCheckinData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// 获取用户信息
+function getUserInfo() {
+  const user = localStorage.getItem(USER_KEY);
+  return user ? JSON.parse(user) : null;
+}
+
+// 保存用户信息
+function saveUserInfo(user) {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+// 退出登录
+function logout() {
+  localStorage.clear();
+  location.reload();
+}
+
+// 登录
+function login() {
+  const user = {
+    nick: "微信用户",
+    avatar: "https://picsum.photos/id/1005/200/200"
+  };
+  saveUserInfo(user);
+  startApp();
+}
+
+// 启动应用
+function startApp() {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
   renderAll();
 }
 
-function isChecked(){return getData().records.includes(today)}
-function renderBtn(){
-  const btn=document.getElementById("checkBtn");
-  const tip=document.getElementById("tip");
-  if(isChecked()){
-    btn.innerText="今日已打卡";btn.disabled=true;
-    tip.innerText="✅ 已完成早安打卡";
-  }else{
-    btn.innerText="立即打卡";btn.disabled=false;
-    tip.innerText="新的一天，加油！";
+// 检查是否已打卡
+function isChecked() {
+  const data = getCheckinData();
+  return data.records.includes(today);
+}
+
+// 渲染打卡按钮
+function renderCheckBtn() {
+  const btn = document.getElementById("checkBtn");
+  const tip = document.getElementById("tip");
+  if (isChecked()) {
+    btn.innerText = "今日已打卡";
+    btn.disabled = true;
+    tip.innerText = "✅ 已完成早安打卡";
+  } else {
+    btn.innerText = "立即打卡";
+    btn.disabled = false;
+    tip.innerText = "新的一天，加油！";
   }
 }
-function renderStats(){
-  const d=getData();
-  document.getElementById("continueDay").innerText=d.continue||0;
-  document.getElementById("totalDay").innerText=d.records.length||0;
+
+// 渲染统计数据
+function renderStats() {
+  const data = getCheckinData();
+  document.getElementById("continueDay").innerText = data.continueDays || 0;
+  document.getElementById("totalDay").innerText = data.records.length || 0;
 }
 
-function calcContinue(){
-  const d=getData();if(d.last===today)return;
-  const yes=new Date();yes.setDate(now.getDate()-1);
-  const yesStr=`${yes.getFullYear()}-${yes.getMonth()+1}-${yes.getDate()}`;
-  d.continue=d.records.includes(yesStr)?(d.continue||0)+1:1;
-  d.last=today;saveData(d);
+// 计算连续打卡天数
+function calcContinueDays() {
+  const data = getCheckinData();
+  if (data.lastCheckin === today) return;
+  
+  // 计算昨天日期
+  const yesterday = new Date(now);
+  yesterday.setDate(d - 1);
+  const yesterdayStr = `${yesterday.getFullYear()}-${yesterday.getMonth() + 1}-${yesterday.getDate()}`;
+  
+  // 如果昨天打卡了，连续天数+1，否则重置为1
+  data.continueDays = data.records.includes(yesterdayStr) ? (data.continueDays || 0) + 1 : 1;
+  data.lastCheckin = today;
+  saveCheckinData(data);
 }
 
-async function makePoster(){
-  const d = getData();
-  const size = 720;
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext("2d");
+// 生成海报（100%还原你发的版式）
+function generatePoster() {
+  return new Promise((resolve) => {
+    const data = getCheckinData();
+    const user = getUserInfo();
+    
+    // 720x720 正方形海报
+    const canvas = document.createElement("canvas");
+    const size = 720;
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
 
-  const img = new Image();
-  img.src = defaultBg;
-  await new Promise(r => img.onload = r);
+    // 加载背景图
+    const bgImg = new Image();
+    bgImg.crossOrigin = "anonymous";
+    bgImg.src = POSTER_BG;
+    
+    bgImg.onload = () => {
+      // 绘制背景
+      ctx.drawImage(bgImg, 0, 0, size, size);
+      
+      // 半透明遮罩，保证文字清晰
+      ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+      ctx.fillRect(0, 0, size, size);
+
+      // 1. 左上角头像
+      const avatarImg = new Image();
+      avatarImg.crossOrigin = "anonymous";
+      avatarImg.src = user.avatar;
+      
+      avatarImg.onload = () => {
+        // 画圆形头像
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(80, 80, 60, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(avatarImg, 20, 20, 120, 120);
+        ctx.restore();
+
+        // 2. 右上角日期（三行：星期、阳历、农历）
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "right";
+        ctx.font = "bold 48px Microsoft YaHei";
+        
+        const weekStr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
+        const solarStr = `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`;
+        const lunarStr = `农历:${y}年${lunarMonths[now.getMonth()]}${d}日`;
+        const checkinTime = data.checkinTime || "07:22";
+
+        // 第一行：星期 + 日期
+        ctx.fillText(`${weekStr}  ${String(d).padStart(2, '0')}`, size - 40, 90);
+        // 第二行：阳历
+        ctx.font = "bold 36px Microsoft YaHei";
+        ctx.fillText(solarStr, size - 40, 140);
+        // 第三行：农历
+        ctx.fillText(lunarStr, size - 40, 185);
+
+        // 3. 左侧打卡天数
+        ctx.textAlign = "left";
+        ctx.font = "bold 40px Microsoft YaHei";
+        ctx.fillText("早起打卡", 40, 250);
+        ctx.font = "bold 80px Microsoft YaHei";
+        ctx.fillText(`${data.continueDays || 0}天`, 40, 340);
+
+        // 4. 今日醒来时间
+        ctx.font = "bold 36px Microsoft YaHei";
+        ctx.fillText("今日醒来", 40, 470);
+        ctx.font = "bold 64px Microsoft YaHei";
+        ctx.fillText(checkinTime, 40, 550);
+
+        // 5. 底部文案
+        ctx.font = "bold 32px Microsoft YaHei";
+        ctx.fillText("早上给自己一个微笑", 40, 660);
+        ctx.fillText("种下一天的阳光", 40, 705);
+
+        // 生成图片
+        const imgUrl = canvas.toDataURL("image/png");
+        resolve(imgUrl);
+      };
+    };
+  });
+}
+
+// 打卡操作
+async function doCheckin() {
+  if (isChecked()) return;
   
-  ctx.drawImage(img, 0, 0, size, size);
-  ctx.fillStyle = "rgba(0,0,0,0.4)";
-  ctx.fillRect(0,0,size,size);
-
-  ctx.fillStyle = "#fff";
-  ctx.textAlign = "left";
-  ctx.font = "bold 32px Microsoft YaHei";
+  const data = getCheckinData();
+  // 记录打卡
+  data.records.push(today);
+  data.checkinTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+  // 计算连续天数
+  calcContinueDays();
+  // 保存数据
+  saveCheckinData(data);
   
-  const week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
-  const solar = `${y}年${m}月${d}日`;
-  const lunar = getLunar();
-  const checkTime = d.checkTime || "未打卡";
-
-  const avatar = document.getElementById("avatar");
-  ctx.drawImage(avatar, 40,40,90,90);
+  // 渲染页面
+  renderCheckBtn();
+  renderStats();
   
-  ctx.fillText(week, 150, 62);
-  ctx.fillText(solar, 150, 102);
-  ctx.fillText(lunar, 150, 142);
-  ctx.fillText(`今日打卡时间：${checkTime}`, 40, 190);
-
-  ctx.textAlign = "center";
-  ctx.font = "bold 38px Microsoft YaHei";
-  ctx.fillText(getText(), size/2, 280);
-  ctx.font = "bold 64px Microsoft YaHei";
-  ctx.fillText(`连续 ${d.continue||0} 天`, size/2, 380);
-  ctx.fillText(`累计 ${d.records.length||0} 天`, size/2, 470);
-
-  document.getElementById("posterImg").src = canvas.toDataURL("image/png");
+  // 生成海报并显示
+  const posterUrl = await generatePoster();
+  document.getElementById("poster-img").src = posterUrl;
   document.getElementById("poster").style.display = "block";
 }
 
-function doCheck(){
-  if(isChecked())return;
-  const d=getData();
-  d.records.push(today);
-  d.checkTime = `${now.getHours()}:${now.getMinutes().toString().padStart(2,'0')}`;
-  calcContinue();
-  saveData(d);
-  renderBtn();
+// 渲染所有内容
+function renderAll() {
+  document.getElementById("quote").innerText = getQuote();
+  renderCheckBtn();
   renderStats();
-  makePoster();
+  document.getElementById("checkBtn").onclick = doCheckin;
 }
 
-function renderAll(){
-  document.getElementById("quote").innerText=getText();
-  renderBtn();
-  renderStats();
-  document.getElementById("checkBtn").onclick=doCheck;
-}
-
-window.onload=()=>{if(getUser())start()}
+// 页面加载
+window.onload = () => {
+  if (getUserInfo()) {
+    startApp();
+  }
+};
 </script>
 </body>
 </html>
