@@ -1,107 +1,291 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>早安打卡</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-        }
-        body {
-            background: linear-gradient(to bottom, #fdf6f0, #fbe9e7);
-            min-height: 100vh;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .title {
-            font-size: 24px;
-            color: #664b4a;
-            margin-bottom: 10px;
-        }
-        .date {
-            font-size: 16px;
-            color: #997a7a;
-            margin-bottom: 30px;
-        }
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-        .greeting {
-            font-size: 20px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        .sentence {
-            font-size: 16px;
-            color: #777;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .btn {
-            background: #f8b3b0;
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 30px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn:hover {
-            background: #f69a96;
-        }
-        .record {
-            font-size: 14px;
-            color: #997a7a;
-            margin-top: 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="title">☀️ 早安打卡</div>
-        <div class="date" id="date"></div>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>早安打卡</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
-        <div class="card">
-            <div class="greeting">新的一天，平安喜乐</div>
-            <div class="sentence">
-                生活最好的状态，是眼里有光，心中有爱，
-                <br>日出而作，日落而息，
-                <br>不慌不忙，闪闪发光。
-            </div>
-            <button class="btn" onclick="daKa()">✅ 今日打卡</button>
-            <div class="record" id="record">已连续打卡 0 天</div>
-        </div>
+body {
+  background: linear-gradient(to bottom, #fff6e9, #ffebe3);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 500;
+}
+
+.header .desc {
+  font-size: 14px;
+  color: #999;
+  margin-top: 6px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-top: 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.date-box {
+  text-align: center;
+}
+
+.date-box .date {
+  font-size: 16px;
+  color: #666;
+}
+
+.date-box .week {
+  font-size: 14px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.checkin-btn {
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin: 30px auto;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #ff9a8b, #ff6b81);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 8px 20px rgba(255, 107, 129, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkin-btn:active {
+  transform: scale(0.96);
+}
+
+.checkin-btn.disabled {
+  background: #ccc;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.tip {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.continue-box {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f2f2f2;
+}
+
+.continue-box .item {
+  text-align: center;
+}
+
+.continue-box .num {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff6b81;
+}
+
+.continue-box .label {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.calendar {
+  margin-top: 30px;
+}
+
+.calendar h3 {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-day {
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #666;
+  background: #f8f8f8;
+  border-radius: 6px;
+}
+
+.calendar-day.checked {
+  background: #ff6b81;
+  color: #fff;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="header">
+    <h1>☀️ 早安打卡</h1>
+    <p class="desc">每天坚持，遇见更好的自己</p>
+  </div>
+
+  <div class="card">
+    <div class="date-box">
+      <div class="date" id="todayDate"></div>
+      <div class="week" id="todayWeek"></div>
     </div>
 
-    <script>
-        // 显示日期
-        let now = new Date();
-        let dateStr = now.getFullYear() + "年" + (now.getMonth()+1) + "月" + now.getDate() + "日";
-        document.getElementById("date").innerText = dateStr;
+    <button class="checkin-btn" id="checkinBtn">立即打卡</button>
+    <div class="tip" id="tip"></div>
 
-        // 打卡逻辑
-        let count = localStorage.getItem("daKaCount") || 0;
-        document.getElementById("record").innerText = "已连续打卡 " + count + " 天";
+    <div class="continue-box">
+      <div class="item">
+        <div class="num" id="continueDay">0</div>
+        <div class="label">连续打卡</div>
+      </div>
+      <div class="item">
+        <div class="num" id="totalDay">0</div>
+        <div class="label">累计打卡</div>
+      </div>
+    </div>
+  </div>
 
-        function daKa() {
-            count++;
-            localStorage.setItem("daKaCount", count);
-            document.getElementById("record").innerText = "已连续打卡 " + count + " 天";
-            alert("打卡成功！今天也要元气满满 ✨");
-        }
-    </script>
+  <div class="calendar">
+    <h3>本月打卡</h3>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+</div>
+
+<script>
+const now = new Date();
+const y = now.getFullYear();
+const m = now.getMonth() + 1;
+const d = now.getDate();
+const today = `${y}-${m}-${d}`;
+
+const STORAGE = "morning_checkin_data";
+
+function getData() {
+  let data = localStorage.getItem(STORAGE);
+  return data ? JSON.parse(data) : { records: [], continue: 0, last: "" };
+}
+
+function saveData(newData) {
+  localStorage.setItem(STORAGE, JSON.stringify(newData));
+}
+
+function initDate() {
+  document.getElementById("todayDate").innerText = `${y}年${m}月${d}日`;
+  const week = ["日", "一", "二", "三", "四", "五", "六"];
+  document.getElementById("todayWeek").innerText = "星期" + week[now.getDay()];
+}
+
+function isChecked() {
+  const data = getData();
+  return data.records.includes(today);
+}
+
+function renderBtn() {
+  const btn = document.getElementById("checkinBtn");
+  const tip = document.getElementById("tip");
+  if (isChecked()) {
+    btn.innerText = "今日已打卡";
+    btn.classList.add("disabled");
+    tip.innerText = "✅ 已完成早安打卡";
+  } else {
+    btn.innerText = "立即打卡";
+    btn.classList.remove("disabled");
+    tip.innerText = "新的一天，加油！";
+  }
+}
+
+function renderStats() {
+  const data = getData();
+  document.getElementById("continueDay").innerText = data.continue || 0;
+  document.getElementById("totalDay").innerText = data.records.length || 0;
+}
+
+function renderCalendar() {
+  const grid = document.getElementById("calendarGrid");
+  grid.innerHTML = "";
+  const data = getData();
+  const days = new Date(y, m, 0).getDate();
+  for (let i = 1; i <= days; i++) {
+    const cls = data.records.includes(`${y}-${m}-${i}`) ? "calendar-day checked" : "calendar-day";
+    grid.innerHTML += `<div class="${cls}">${i}</div>`;
+  }
+}
+
+function calcContinue() {
+  const data = getData();
+  if (data.last === today) return;
+
+  const yesterday = new Date(now);
+  yesterday.setDate(d - 1);
+  const ymd = `${yesterday.getFullYear()}-${yesterday.getMonth()+1}-${yesterday.getDate()}`;
+
+  if (data.records.includes(ymd)) {
+    data.continue = (data.continue || 0) + 1;
+  } else {
+    data.continue = 1;
+  }
+  data.last = today;
+  saveData(data);
+}
+
+function doCheckin() {
+  if (isChecked()) return;
+  const data = getData();
+  data.records.push(today);
+  calcContinue();
+  saveData(data);
+  renderBtn();
+  renderStats();
+  renderCalendar();
+}
+
+function init() {
+  initDate();
+  renderBtn();
+  renderStats();
+  renderCalendar();
+  document.getElementById("checkinBtn").onclick = doCheckin;
+}
+
+window.onload = init;
+</script>
 </body>
 </html>
