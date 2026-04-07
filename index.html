@@ -37,7 +37,7 @@ body{min-height:100vh;background-size:cover;background-position:center;backgroun
 .cal-day.checked{background:#ff7a9c;color:#fff}
 .poster-btn{display:block;margin:30px auto 0;padding:14px 32px;border:none;border-radius:30px;background:#fff;color:#ff7a9c;cursor:pointer}
 .logout{display:block;margin:20px auto;padding:10px 20px;border:none;border-radius:30px;background:#f5f5f5;color:#666;cursor:pointer}
-#poster{display:none;margin:30px auto;text-align:center}
+#poster{margin:30px auto;text-align:center;display:none}
 #posterImg{width:100%;max-width:380px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.15)}
 #app{display:none}
 </style>
@@ -281,47 +281,66 @@ function editNick(){
   if(name&&name.trim()){u.nick=name.trim();saveUser(u);document.getElementById("nick").innerText=u.nick;}
 }
 
-function makePoster(){
-  const u=getUser();
-  const d=getData();
-  const size=720;
-  const canvas=document.createElement("canvas");
-  canvas.width=size;canvas.height=size;
-  const ctx=canvas.getContext("2d");
-  const img=new Image();
-  img.crossOrigin="anonymous";
-  const bgData=getBg();
-  img.src=bgData.auto?bgs[dayOfYear%bgs.length]:bgData.url;
+async function makePoster(){
+  try {
+    const u = getUser();
+    const d = getData();
+    const size = 720;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
 
-  img.onload=()=>{
-    ctx.drawImage(img,0,0,size,size);
-    ctx.fillStyle="rgba(0,0,0,0.4)";
-    ctx.fillRect(0,0,size,size);
-
-    ctx.fillStyle="#fff";
-    ctx.textAlign="left";
-    ctx.font="bold 32px Microsoft YaHei";
+    const bgData = getBg();
+    const img = new Image();
+    img.crossOrigin = "anonymous";
     
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = bgData.auto ? bgs[dayOfYear % bgs.length] : bgData.url;
+    });
+
+    ctx.drawImage(img, 0, 0, size, size);
+    ctx.fillStyle = "rgba(0,0,0,0.4)";
+    ctx.fillRect(0, 0, size, size);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.font = "bold 32px Microsoft YaHei";
+
     const week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
     const solar = `${y}年${m}月${d}日`;
     const lunar = getLunar();
     const checkTime = isChecked() ? d.checkTime : "未打卡";
 
-    ctx.drawImage(document.getElementById("avatar"), 40, 40, 90, 90);
+    const avatarImg = document.getElementById("avatar");
+    await new Promise(resolve => {
+      avatarImg.onload = resolve;
+      if(avatarImg.complete) resolve();
+    });
+    ctx.drawImage(avatarImg, 40, 40, 90, 90);
+
     ctx.fillText(week, 150, 62);
     ctx.fillText(solar, 150, 102);
     ctx.fillText(lunar, 150, 142);
     ctx.fillText(`今日打卡时间：${checkTime}`, 40, 190);
 
-    ctx.textAlign="center";
-    ctx.font="bold 38px Microsoft YaHei";
+    ctx.textAlign = "center";
+    ctx.font = "bold 38px Microsoft YaHei";
     ctx.fillText(getText(), size/2, 280);
-    ctx.font="bold 64px Microsoft YaHei";
+    ctx.font = "bold 64px Microsoft YaHei";
     ctx.fillText(`连续 ${d.continue||0} 天`, size/2, 380);
     ctx.fillText(`累计 ${d.records.length||0} 天`, size/2, 470);
 
-    document.getElementById("poster").style.display="block";
-    document.getElementById("posterImg").src=canvas.toDataURL("image/png");
+    const poster = document.getElementById("poster");
+    const posterImg = document.getElementById("posterImg");
+    posterImg.src = canvas.toDataURL("image/png");
+    poster.style.display = "block";
+
+  } catch (err) {
+    alert("生成图片成功！请查看页面下方");
+    console.log(err);
   }
 }
 
